@@ -1,0 +1,86 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Patient {
+public:
+    string name;
+    string phone;
+};
+
+class Doctor {
+public:
+    string name;
+};
+
+class MedicalInformationSystem {
+public:
+    void addPatient(Patient patient) {
+       
+    }
+    
+    void addDoctor(Doctor doctor) {
+       
+    }
+    
+    void saveToFile(string filename, Doctor doctor, Patient patient) {
+        ofstream file;
+        file.open(filename, ios::app);
+        if (file.is_open()) {
+            file << "Doctor: " << doctor.name << endl;
+            file << "Patient: " << patient.name << endl;
+            file << "Phone number: "<< patient.phone << endl;
+            file.close();
+        }
+        else {
+            cout << "Error: could not open file " << filename << endl;
+        }
+    }
+    
+    void openFile(string filename) {
+        ifstream file;
+        file.open(filename);
+        if (file.is_open()) {
+            string line;
+            while (getline(file, line)) {
+                cout << line << endl;
+            }
+            file.close();
+        }
+        else {
+            cout << "Error: could not open file " << filename << endl;
+        }
+    }
+};
+
+int main() {
+    MedicalInformationSystem system;
+    
+    string doctorName, patientName, patientPhone;
+    
+    cout << "Enter Doctor's Name: ";
+    cin >> doctorName;
+    
+    cout << "\nEnter Patient's Name: ";
+    cin >> patientName;
+    
+    cout << "\nEnter Patient's Phone Number: ";
+    cin >> patientPhone;
+    
+    Patient patient;
+    patient.name = patientName;
+    patient.phone = patientPhone;
+    
+    Doctor doctor;
+    doctor.name = doctorName;
+    
+    system.addPatient(patient);
+    system.addDoctor(doctor);
+    system.saveToFile("medical_records.txt", doctor, patient);
+    system.openFile("medical_records.txt");
+    
+   
+    return 0;
+}
